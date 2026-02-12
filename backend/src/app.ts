@@ -1,14 +1,14 @@
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import { FRONTEND_URL, NODE_ENV } from './utils/env.js';
-import { logger } from './lib/logger.js';
-import { pool } from './db/pool.js';
-import setsRouter from './modules/sets/sets.routes.js';
-import themesRouter from './modules/themes/themes.routes.js';
-import statsRouter from './modules/stats/stats.routes.js';
-import authRouter from './modules/auth/auth.routes.js';
-import collectionsRouter from './modules/collections/collections.routes.js';
-import { errorHandler } from './middleware/errorHandler.js';
+import { logger } from './utils/logger.js';
+import { pool } from './database/pool.js';
+import setsRouter from './features/sets/sets.routes.js';
+import themesRouter from './features/themes/themes.routes.js';
+import statsRouter from './features/stats/stats.routes.js';
+import authRouter from './features/auth/auth.routes.js';
+import collectionsRouter from './features/collections/collections.routes.js';
+import { errorHandler } from './server.errors.js';
 
 const app = express();
 

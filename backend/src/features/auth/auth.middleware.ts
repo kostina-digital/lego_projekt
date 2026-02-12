@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { logger } from '../lib/logger.js';
-import { COOKIE_NAME } from '../utils/env.js';
-import { query } from '../db/pool.js';
+import { logger } from '../../utils/logger.js';
+import { COOKIE_NAME } from '../../utils/env.js';
+import { validateSession } from './auth.service.js';
 
 export interface AuthRequest extends Request {
   userId?: number;
@@ -66,15 +66,3 @@ export const optionalAuthMiddleware = async (req: AuthRequest, res: Response, ne
     next();
   }
 };
-
-async function validateSession(token: string) {
-  const result = await query(
-    `SELECT us.user_id, u.username
-     FROM user_sessions us
-     JOIN users u ON u.id = us.user_id
-     WHERE us.token = $1 AND us.expires_at > NOW()`,
-    [token]
-  );
-
-  return result.rows[0] || null;
-}
